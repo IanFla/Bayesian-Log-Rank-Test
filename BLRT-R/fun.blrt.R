@@ -10,7 +10,7 @@ blrt <- function(L1, R1, L2, R2, size=1000, M=0.001, a=0.001, b=0.001) {
 }
 
 
-if (1 == 1) {
+if (1 == 0) {
     # codes for testing
     library(survival)
     library(ggplot2)
