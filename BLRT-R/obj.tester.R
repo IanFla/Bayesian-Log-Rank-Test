@@ -54,7 +54,7 @@ Tester <- R6::R6Class("Tester", list(
 ))
 
 
-if (1 == 1) {
+if (1 == 0) {
     # codes for testing
     library(ggplot2)
     
@@ -85,18 +85,19 @@ if (1 == 1) {
             Dat <- generate()
             test <- Tester$new(Dat$L1, Dat$R1, Dat$L2, Dat$R2)
             test$classic()
-            test$bayesian()
+            print(system.time(test$bayesian()))
             RES$pv.freq <- c(RES$pv.freq, test$Res$pv.freq)
             RES$pv.baye <- c(RES$pv.baye, test$Res$pv.baye)
         }
         
-        df <- data.frame(alpha=seq(0, 1, length=100))
-        df$pvalue <- rowMeans(outer(df$alpha, RES$pv.freq, ">="))
-        df$pv2 <- rowMeans(outer(df$alpha, RES$pv.baye, ">="))
-        gr <- ggplot(df) + geom_line(aes(x=alpha, y=pvalue), color=1) + 
-            geom_line(aes(x=alpha, y=pv2), color=2)
+        df <- data.frame(alpha=seq(0, 1, length=30))
+        df$rej.pro <- rowMeans(outer(df$alpha, RES$pv.freq, ">="))
+        df$rp2 <- rowMeans(outer(df$alpha, RES$pv.baye, ">="))
+        gr <- ggplot(df) + geom_line(aes(x=alpha, y=rej.pro), color=1) + 
+            geom_line(aes(x=alpha, y=rp2), color=2)
         
         print(gr)
+        plot(RES$pv.freq, RES$pv.baye)
     }
     
     main()
