@@ -19,5 +19,8 @@ cal.beta <- function(a, b) {
     m <- a / (a + b)
     s <- sqrt(a * b / (a + b + 1)) / (a + b)
     
+    x <- seq(0, 1, length=1000)
+    plot(x, dbeta(x, a, b))
+    
     pbeta(m + s, a, b) - pbeta(m - s, a, b)
 }
